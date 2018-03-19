@@ -13,4 +13,5 @@ public abstract class HelperBase {
         this.manager = manager;
     }
 
+
 }

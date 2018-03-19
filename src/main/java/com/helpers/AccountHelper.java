@@ -28,6 +28,10 @@ public class AccountHelper extends DriverHelperBase {
         fillEmail(user.email);
         clickConfirmSignUp();
 
+        if (driver.findElement(By.xpath("//table[contains(@class,'class50')]")).isDisplayed()){
+            throw new RuntimeException();
+        }
+
         /*long now = System.currentTimeMillis();
         long deadline = now + 5000;
         while (now < deadline) {

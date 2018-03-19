@@ -1,9 +1,6 @@
 package com;
 
-import com.helpers.AccountHelper;
-import com.helpers.EmailHelper;
-import com.helpers.HibernateHelper;
-import com.helpers.JamesHelper;
+import com.helpers.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,6 +19,8 @@ public class ApplicationManager {
     private AccountHelper accountHelper;
     private EmailHelper emailHelper;
     private JamesHelper jamesHelper;
+    private FTPHelper ftpHelper;
+    private AdminHelper adminHelper;
 
     private Properties properties;
 
@@ -31,7 +30,8 @@ public class ApplicationManager {
     }
 
     public void stop() {
-        driver.quit();
+        //driver.quit();
+        ftpHelper.restoreConfig();
     }
 
     public WebDriver getDriver() {
@@ -62,7 +62,15 @@ public class ApplicationManager {
     }
 
     public String getProperty(String key) {
-       return  properties.getProperty(key);
+        return properties.getProperty(key);
+    }
+
+    public String getProperty(String key, String defaultValue) {
+        return properties.getProperty(key, defaultValue);
+    }
+
+    public void setProperties(Properties props) {
+        this.properties = props;
     }
 
     public AccountHelper getAccountHelper() {
@@ -93,4 +101,17 @@ public class ApplicationManager {
         return hibernateHelper;
     }
 
+    public FTPHelper getFTPHelper() {
+        if (ftpHelper == null) {
+            ftpHelper = new FTPHelper(this);
+        }
+        return ftpHelper;
+    }
+
+    public AdminHelper getAdminHelper() {
+        if (adminHelper == null) {
+            adminHelper = new AdminHelper(this);
+        }
+        return adminHelper;
+    }
 }
